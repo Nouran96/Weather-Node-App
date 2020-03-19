@@ -2,6 +2,9 @@ const path = require('path');
 const express = require('express');
 const hbs = require('hbs');
 
+const geocode = require('./utils/geocode');
+const forecast = require('./utils/forecast');
+
 const app = express();
 
 // Define paths for Express configuration
@@ -40,13 +43,33 @@ app.get('/help', (req, res) => {
 })
 
 app.get('/weather', (req, res) => {
-    res.send({
-        forecast: 'My Forecast',
-        location: 'My location'
-    });
+
+    if (!req.query.address) {
+        return res.send({
+            error: 'You must provide an address'
+        })
+    }
+
+    geocode(req.query.address, (error, { lat, long, place_name }) => {
+        if (error) {
+            return res.send({ error })
+        }
+        
+        forecast(lat, long, (error, forecastData) => {
+            if (error) {
+                return res.send({ error })
+            }
+
+            res.send({
+                location: place_name,
+                forecast: forecastData,
+                address: req.query.address
+            });
+        })
+    })
 });
 
-app.get('/help/*', (req,res) => {
+app.get('/help/*', (req, res) => {
     res.render('404', {
         title: '404 Page',
         name: 'Nouran Samy',
