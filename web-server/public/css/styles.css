@@ -9,14 +9,22 @@ body {
     max-width: 250px;
 }
 
+#errorMsg {
+    visibility: hidden;
+    margin-top: 1rem;
+}
+
 form {
     width: 50%;
     margin: 0 auto;
+}
+
+.main-content {
+    min-height: 70vh;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-height: 70vh
 }
 
 form input {

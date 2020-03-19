@@ -14,13 +14,18 @@
     <div class="d-flex flex-column flex-grow-1">
         {{>header}}
 
-        <div class="container">
+        <div class="container main-content">
 
+            
             <form>
                 <h5 class="text-center mb-4 font-weight-bold">Find out the weather anywhere</h5>
                 <input type="text" class="form-control" placeholder="Enter a location" id="addressInput">
                 <button class="btn btn-dark" id="getWeatherBtn">Get Weather</button>
             </form>
+            <span id="errorMsg" class="text-center text-danger"></span>
+            
+            <h3 id="location" class="display-5"></h3>
+            <p id="forecast" class="text-left text-md-center"></p>
         </div>
     </div>
     {{>footer}}
