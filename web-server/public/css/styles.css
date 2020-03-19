@@ -9,6 +9,20 @@ body {
     max-width: 250px;
 }
 
+form {
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 70vh
+}
+
+form input {
+    margin-bottom: 1rem;
+}
+
 footer {
     padding: 1rem;
 }

@@ -22,7 +22,7 @@ app.use(express.static(publicDir)) // for static files
 
 app.get('', (req, res) => {
     res.render('index', {
-        title: 'Weather Page',
+        title: '',
         name: 'Nouran Samy'
     });
 })
@@ -50,11 +50,11 @@ app.get('/weather', (req, res) => {
         })
     }
 
-    geocode(req.query.address, (error, { lat, long, place_name }) => {
+    geocode(req.query.address, (error, { lat, long, place_name } = {}) => {
         if (error) {
             return res.send({ error })
         }
-        
+
         forecast(lat, long, (error, forecastData) => {
             if (error) {
                 return res.send({ error })
