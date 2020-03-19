@@ -3,16 +3,18 @@ const express = require('express');
 
 const app = express();
 
-// index.html is the default page for root url
+// Define paths for Express configuration
 const publicDir = path.join(__dirname, '../public');
+const viewsPath = path.join(__dirname, '../templates');
 
+// Setup handlebars engine and views location
 app.set('view engine', 'html') // for dynamic templates
-app.engine('html', require('hbs').__express); // remove this templates have extension .hbs
+app.engine('html', require('hbs').__express); // remove this if templates have extension .hbs
+app.set('views', viewsPath); // change the default views directory to templates
 
 app.use(express.static(publicDir)) // for static files
 
 app.get('', (req, res) => {
-    // templates should be added in views folder
     res.render('index', {
         title: 'Weather'
     });
