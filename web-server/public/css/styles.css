@@ -1,7 +1,18 @@
-h1 {
-    color: red;
+body {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh
 }
 
-img {
-    width: 250px;
+.about-img {
+    max-width: 250px;
+}
+
+footer {
+    padding: 1rem;
+}
+
+footer p {
+    margin: 0
 }
