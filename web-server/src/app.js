@@ -46,6 +46,22 @@ app.get('/weather', (req, res) => {
     });
 });
 
+app.get('/help/*', (req,res) => {
+    res.render('404', {
+        title: '404 Page',
+        name: 'Nouran Samy',
+        errorMsg: 'Help article not found'
+    });
+});
+
+app.get('*', (req, res) => {
+    res.render('404', {
+        errorMsg: 'This page is not found',
+        title: '404 Page',
+        name: 'Nouran Samy'
+    });
+})
+
 app.listen(8000, () => {
     console.log('Server is listening on port 8000')
 })
