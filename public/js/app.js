@@ -44,6 +44,6 @@ weatherBtn.onclick = (ev) => {
             // console.log(data.forecast)
         }
     }).catch(err => {
-        errorSpan.textContent = 'Unable to connect to location service' + err;
+        errorSpan.textContent = 'Unable to connect to location service. Check your Connection';
     })
 }
