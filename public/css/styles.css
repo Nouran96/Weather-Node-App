@@ -20,7 +20,7 @@ body {
 }
 
 form {
-    width: 50%;
+    /* width: 50%; */
     margin: 0 auto;
 }
 
@@ -36,6 +36,12 @@ form {
     min-height: 250px;
     font-family: monospace;
     background: linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.4)), url('/img/weather-bg.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+#about h2 {
+    font-size: 5.5rem;
 }
 
 #temp {align-self: center;}
@@ -58,4 +64,20 @@ footer {
 
 footer p {
     margin: 0
+}
+
+@media screen and (max-width: 992px) {
+    .about-content p {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .about-content p {
+        width: 90%;
+    }
+
+    #about h2 {
+        font-size: 4rem
+    }
 }
