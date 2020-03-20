@@ -2,7 +2,8 @@ const path = require('path');
 const express = require('express');
 const hbs = require('hbs');
 
-const geocode = require('./utils/geocode');
+const rGeocode = require('./utils/reverseGeocode');
+const fGeocode = require('./utils/forwardGeocode');
 const forecast = require('./utils/forecast');
 
 const app = express();
@@ -23,7 +24,7 @@ app.use(express.static(publicDir)) // for static files
 
 app.get('', (req, res) => {
     res.render('index', {
-        title: '',
+        title: 'Home Page',
         name: 'Nouran Samy'
     });
 })
@@ -51,7 +52,8 @@ app.get('/weather', (req, res) => {
         })
     }
 
-    geocode(req.query.address, (error, { lat, long, place_name } = {}) => {
+    // convert address to coordinates
+    fGeocode(req.query.address, (error, { lat, long, place_name } = {}) => {
         if (error) {
             return res.send({ error })
         }
@@ -69,6 +71,38 @@ app.get('/weather', (req, res) => {
         })
     })
 });
+
+app.get('/local', (req, res) => {
+
+    if(req.query.long && req.query.lat) {
+
+        const lat = req.query.lat;
+        const long = req.query.long;
+
+        forecast(lat, long, (error, forecastData) => {
+            if (error) {
+                return res.send({ error })
+            }
+
+            // get location through coordinates
+            rGeocode(lat, long, (error, data) => {
+                if(error) {
+                    return res.send({error})
+                }
+
+                res.send({
+                    forecast: forecastData,
+                    location: data.place_name
+                });
+            })
+    
+        })
+    } else {
+        res.send({
+            error: "Can't retrieve forecast for your location"
+        })
+    }
+})
 
 app.get('/help/*', (req, res) => {
     res.render('404', {

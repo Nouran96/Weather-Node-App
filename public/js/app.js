@@ -11,14 +11,37 @@ const rainEl = document.querySelector('#rain');
 const windEl = document.querySelector('#wind');
 const humidEl = document.querySelector('#humid');
 
+// Fetch current location through geolocation
+if(navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition((position) => {
+        const lat = position.coords.latitude;
+        const long = position.coords.longitude;
+
+        errorSpan.style.visibility = 'visible'
+        errorSpan.textContent = 'Fetching your location ...';
+
+        fetch(`/local?lat=${lat}&long=${long}`).then((res) => {
+            return res.json()
+        }).then(data => {
+            if(data.error) {
+                errorSpan.textContent = data.error;
+            } else {
+                renderPage(data);
+            }
+        }).catch(err => {
+            errorSpan.textContent = 'Unable to connect to location service. Check your Connection';
+        })
+    }, () => {
+        errorSpan.textContent = 'Unable to retrieve your location';
+    })
+}
+
 
 weatherBtn.onclick = (ev) => {
     ev.preventDefault();
 
     errorSpan.style.visibility = 'visible'
-    errorSpan.textContent = 'Loading ...';
-    // locationEl.textContent = '';
-    // forecastEl.textContent = '';
+    errorSpan.textContent = 'Fetching your location ...';
 
     const address = addressInput.value;
 
@@ -28,22 +51,21 @@ weatherBtn.onclick = (ev) => {
         if(data.error) {
             errorSpan.textContent = data.error;
         } else {
-            // console.log(data.forecast)
-            errorSpan.textContent = ''
-
-            locationEl.textContent = data.location;
-            summaryEl.textContent = data.forecast.summary;
-            iconEl.setAttribute('src', `/img/${data.forecast.icon}.png`);
-            tempEl.textContent = data.forecast.temperature + '˚';
-            rainEl.innerHTML = '<b>Chance of Rain: </b>' + data.forecast.rainProp + '%';
-            windEl.innerHTML = '<b>Wind Speed: </b>' + data.forecast.windSpeed + 'mph';
-            humidEl.innerHTML = '<b>Humidity: </b>' + data.forecast.humidity + '%';
-            // forecastEl.textContent = data.forecast;
-            
-            // console.log(data.location)
-            // console.log(data.forecast)
+            renderPage(data);
         }
     }).catch(err => {
         errorSpan.textContent = 'Unable to connect to location service. Check your Connection';
     })
+}
+
+function renderPage(data) {
+    errorSpan.textContent = ''
+    
+    locationEl.textContent = data.location;
+    summaryEl.textContent = data.forecast.summary;
+    iconEl.setAttribute('src', `/img/${data.forecast.icon}.png`);
+    tempEl.textContent = data.forecast.temperature + '˚';
+    rainEl.innerHTML = '<b>Chance of Rain: </b>' + data.forecast.rainProp + '%';
+    windEl.innerHTML = '<b>Wind Speed: </b>' + data.forecast.windSpeed + 'mph';
+    humidEl.innerHTML = '<b>Humidity: </b>' + data.forecast.humidity + '%';
 }
