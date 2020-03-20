@@ -28,7 +28,7 @@ weatherBtn.onclick = (ev) => {
         if(data.error) {
             errorSpan.textContent = data.error;
         } else {
-            console.log(data.forecast)
+            // console.log(data.forecast)
             errorSpan.textContent = ''
 
             locationEl.textContent = data.location;
@@ -40,8 +40,10 @@ weatherBtn.onclick = (ev) => {
             humidEl.innerHTML = '<b>Humidity: </b>' + data.forecast.humidity + '%';
             // forecastEl.textContent = data.forecast;
             
-            console.log(data.location)
-            console.log(data.forecast)
+            // console.log(data.location)
+            // console.log(data.forecast)
         }
+    }).catch(err => {
+        errorSpan.textContent = 'Unable to connect to location service' + err;
     })
 }
