@@ -20,6 +20,8 @@ You should have `node` installed. If you don't, install it from [here](https://n
 
 - **Node.js** => Server side language for APIs consuming
 - **Express.js** => Creation of web server for HTTP requests
+- **DarkSky API** => API to fetch weather data
+- **Mapbox API** => API to convert location name to be used by darksky api
 - **Javascript** => Client side language for communication with server
 - **HTML** & **Handlebars** => Templates and views structure of the application
 - **CSS** & **Bootstrap** => Styling of the application
