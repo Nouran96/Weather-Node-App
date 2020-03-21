@@ -7,7 +7,9 @@ const fGeocode = require('./utils/forwardGeocode');
 const forecast = require('./utils/forecast');
 
 const app = express();
-const port = process.env.PORT || 8000;
+// const port = process.env.PORT || 8000;
+const port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+const address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
 // Define paths for Express configuration
 const publicDir = path.join(__dirname, '../public');
@@ -120,6 +122,6 @@ app.get('*', (req, res) => {
     });
 })
 
-app.listen(port, () => {
+app.listen(port,address, () => {
     console.log(`Server is listening on port ${port}`)
 })
