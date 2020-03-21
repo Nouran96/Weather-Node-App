@@ -32,6 +32,7 @@ if(navigator.geolocation) {
             errorSpan.textContent = 'Unable to connect to location service. Check your Connection';
         })
     }, () => {
+        errorSpan.style.visibility = 'visible'
         errorSpan.textContent = 'Unable to retrieve your location';
     })
 }
